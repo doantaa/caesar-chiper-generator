@@ -1,34 +1,28 @@
-import random
-
+from ChiperArt import logo
 
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
-text = input("Type your message:\n").lower()
-shift = int(input("Type the shift number:\n"))
-
-def encrypt(plain_text,shift_amount):
-    chiper_text = ""
-    for letter in plain_text:
-        position = alphabet.index(letter)
-        chiper_position = position + shift_amount
-        if chiper_position >= 26:
-            chiper_position -= 26
-        chiper_text += alphabet[chiper_position]
-    print(f"The encoded text is: {chiper_text}")
-
-def decrypt(chiper_text, shift_amount):
-    plain_text = ""
-    for letter in chiper_text:
-        position = alphabet.index(letter)
-        plain_position = position - shift_amount
-        plain_text += alphabet[plain_position]
-    print(f"The decode text is: {plain_text}")
-
-
-if direction == "encode":
-    encrypt(plain_text=text, shift_amount=shift)
-elif direction == "decode":
-    decrypt(chiper_text=text, shift_amount=shift)
-else:
-    print("You type the wrong choice")
+def caesar(input_text, shift_amount, chiper_direction):
+    result_text = ""
+    if chiper_direction == "decode":
+        shift_amount *= -1
+    for letter in input_text:
+        if not letter in alphabet:
+            result_text += letter
+        else: 
+            position = alphabet.index(letter)
+            new_position = (position + shift_amount) % 26
+            result_text += alphabet[new_position] 
+    print(f"Here's the {direction}d result: {result_text}")
+    
+print(logo)
+run = True
+while run:
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+    text = input("Type your message:\n").lower()
+    shift = int(input("Type the shift number:\n"))
+    caesar(input_text=text, shift_amount=shift, chiper_direction=direction)
+    is_run = input("Type 'yes' if you want to go again. Otherwise, type 'no' : \n")
+    if is_run == 'no':
+        print("Goodbye")
+        run = False
